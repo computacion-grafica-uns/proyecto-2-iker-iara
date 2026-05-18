@@ -7,7 +7,9 @@ Shader "BlinnPhong_Textured"
         _k_d_coeff("Diffuse coefficient", Float) = 10
         [NoScaleOffset] _k_s_tex("Specular", 2D) = "white" {}
         _k_s_coeff("Specular coefficient", Float) = 10
-        [NoScaleOffset] _NormalMap("Normal map", 2D) = "black" {}
+        [MaterialToggle] _IsRoughness("Is this a roughness map instead of a specular map?", Float) = 1
+        [NoScaleOffset] _N_tex("Normal map", 2D) = "black" {}
+        _N_coeff("Normal coefficient", Float) = 1
         _n("Shinnyness", Float) = 10
         _L_pos("Light position", Vector) = (0,3,0)
         _L_int("Light intensity", Float) = 1
@@ -39,9 +41,9 @@ Shader "BlinnPhong_Textured"
             };
 
             float3 _L_pos;
-            float _L_int, _L_pow, _n, _k_d_coeff, _k_s_coeff;
+            float _L_int, _L_pow, _n, _k_d_coeff, _k_s_coeff, _N_coeff, _IsRoughness;
             float4 _k_a;
-            sampler2D _k_d_tex, _k_s_tex, _NormalMap;
+            sampler2D _k_d_tex, _k_s_tex, _N_tex;
 
             v2f vert(appdata i)
             {
@@ -60,8 +62,8 @@ Shader "BlinnPhong_Textured"
                 fixed4 fragColor = 1;
 
                 float4 _k_d = tex2D(_k_d_tex, v.uv);
-                float4 _k_s = pow(1-tex2D(_k_s_tex, v.uv), 2);
-                float3 normal_map = tex2D(_NormalMap, v.uv);
+                float4 _k_s = pow(_IsRoughness + (-2 * _IsRoughness + 1) * tex2D(_k_s_tex, v.uv), 2);
+                float3 normal_map = tex2D(_N_tex, v.uv) * _N_coeff;
 
                 float L_dist = length(_L_pos - v.world_pos);
                 float3 L_versor = normalize(_L_pos - v.world_pos);
