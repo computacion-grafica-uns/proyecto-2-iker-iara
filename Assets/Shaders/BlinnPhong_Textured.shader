@@ -8,7 +8,7 @@ Shader "BlinnPhong_Textured"
         [NoScaleOffset] _k_s_tex("Specular", 2D) = "white" {}
         _k_s_coeff("Specular coefficient", Float) = 10
         [MaterialToggle] _IsRoughness("Is this a roughness map instead of a specular map?", Float) = 1
-        [NoScaleOffset] _N_tex("Normal map", 2D) = "black" {}
+        [NoScaleOffset] _N_tex("Normal map", 2D) = "bump" {}
         _N_coeff("Normal coefficient", Float) = 1
         _n("Shinnyness", Float) = 10
         _L_pos("Light position", Vector) = (0,3,0)
@@ -29,6 +29,7 @@ Shader "BlinnPhong_Textured"
             {
                 float4 pos : POSITION;
                 float3 normal : NORMAL;
+                float4 tangent : TANGENT;
                 float2 uv : TEXCOORD0;
             };
 
@@ -38,6 +39,8 @@ Shader "BlinnPhong_Textured"
                 float2 uv : TEXCOORD0;
                 float4 world_pos : TEXCOORD1;
                 float3 normal_versor : TEXCOORD2;
+                float3 tangent_versor : TEXCOORD3;
+                float3 bitangent_versor : TEXCOORD4;
             };
 
             float3 _L_pos;
@@ -53,6 +56,8 @@ Shader "BlinnPhong_Textured"
                 o.pos = mul(UNITY_MATRIX_P, mul(UNITY_MATRIX_V, o.world_pos));
                 o.uv = i.uv;
                 o.normal_versor = UnityObjectToWorldNormal(i.normal);
+                o.tangent_versor = UnityObjectToWorldDir(i.tangent.xyz); 
+                o.bitangent_versor = cross(o.tangent_versor, o.normal_versor) * (i.tangent.w * unity_WorldTransformParams.w);
 
                 return o;
             }
@@ -61,13 +66,17 @@ Shader "BlinnPhong_Textured"
             {
                 fixed4 fragColor = 1;
 
+
                 float4 _k_d = tex2D(_k_d_tex, v.uv);
                 float4 _k_s = pow(_IsRoughness + (-2 * _IsRoughness + 1) * tex2D(_k_s_tex, v.uv), 2);
-                float3 normal_map = tex2D(_N_tex, v.uv) * _N_coeff;
+                //float3 normal_map = lerp(float3(0,0,1), tex2D(_N_tex, v.uv) * 2.0 - 1.0, _N_coeff);
+                float3 normal_map = lerp(float3(0,0,1), UnpackNormal(tex2D(_N_tex, v.uv)), _N_coeff);
 
+                float3x3 TBN = transpose(float3x3(v.tangent_versor, v.bitangent_versor, v.normal_versor));
+                
                 float L_dist = length(_L_pos - v.world_pos);
                 float3 L_versor = normalize(_L_pos - v.world_pos);
-                float3 N_versor = normalize(v.normal_versor + normal_map);
+                float3 N_versor = normalize(mul(TBN, normal_map));
                 float3 V_versor =  normalize(_WorldSpaceCameraPos - v.world_pos);
                 float3 LV = (L_versor + V_versor);
                 float3 H_versor = LV / length(LV);

@@ -12,7 +12,8 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _ISROUGHNESS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -88,11 +89,12 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _IsRoughness: 1
     - _L_int: 1
     - _L_pow: 2
     - _Metallic: 0
     - _Mode: 0
-    - _N_coeff: 0.7
+    - _N_coeff: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
@@ -108,7 +110,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _L_pos: {r: 0, g: 3, b: 0, a: 1}
-    - _k_a: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _k_a: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
     - _k_a_tex: {r: 1, g: 1, b: 1, a: 1}
     - _k_d: {r: 0.175, g: 0.10480768, b: 0.044230767, a: 1}
     - _k_s: {r: 0.775, g: 0.46, b: 0.2, a: 1}
