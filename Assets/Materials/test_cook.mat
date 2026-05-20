@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mimbre
-  m_Shader: {fileID: 4800000, guid: 8c2f2582ac0a9074f9d9bf2d7d5c42fe, type: 3}
+  m_Name: test_cook
+  m_Shader: {fileID: 4800000, guid: bcdd298e6abea434eb7780ba18137458, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -53,11 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _N_tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 7014528e6c97bfa47bdfdca3405b53e0, type: 3}
+        m_Texture: {fileID: 2800000, guid: bf965e7971c88364ca9fdcb7562a45bb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -69,15 +65,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _k_d_tex:
-        m_Texture: {fileID: 2800000, guid: 4e021990f135e6a4a99cff641100361d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 35e005d8ccf1fa945a2caf3412d88662, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _k_s_tex:
-        m_Texture: {fileID: 2800000, guid: 56a0709068d4f6f4a9f1ff5c00950738, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _n_tex:
-        m_Texture: {fileID: 2800000, guid: 751cb66ec4b892d4da7922e52114649a, type: 3}
+        m_Texture: {fileID: 2800000, guid: c1b59b38e01bb0241b230d2e58efbf3f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -103,15 +95,11 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _k_d_coeff: 10
-    - _k_s_coeff: 5
-    - _n: 45
-    - _n_pow: 1
+    - _k_s_coeff: 10
+    - _n: 382.52
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _L_pos: {r: 0, g: 3, b: 0, a: 1}
-    - _k_a: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
-    - _k_a_tex: {r: 1, g: 1, b: 1, a: 1}
-    - _k_d: {r: 0.175, g: 0.10480768, b: 0.044230767, a: 1}
-    - _k_s: {r: 0.775, g: 0.46, b: 0.2, a: 1}
+    - _k_a: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
   m_BuildTextureStacks: []
