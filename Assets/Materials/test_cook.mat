@@ -78,6 +78,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FlipRoughness: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -95,11 +96,14 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _k_d_coeff: 10
-    - _k_s_coeff: 10
+    - _k_s_coeff: 1
     - _n: 382.52
+    - _r_d_coeff: 10
+    - _r_s_coeff: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _F_0: {r: 1.022, g: 0.782, b: 0.34399998, a: 1}
     - _L_pos: {r: 0, g: 3, b: 0, a: 1}
-    - _k_a: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
+    - _k_a: {r: 0.148, g: 0.10641323, b: 0.050148763, a: 1}
   m_BuildTextureStacks: []
