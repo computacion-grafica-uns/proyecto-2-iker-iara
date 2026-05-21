@@ -89,7 +89,7 @@ Shader "CookTorrance_Textured"
                 float alpha = rp * rp;
                 float k = alpha / 2.0;
 
-                float4 fresnel = _F_0 + (float4(1,1,1,1) - _F_0) * pow(1 - VH, 5.0);
+                float4 fresnel = _F_0 + (float4(1,1,1,1) - _F_0) * pow(1 - NV, 5.0);
                 float ndf = alpha * alpha / (UNITY_PI * pow((NH*NH * (alpha*alpha - 1) + 1), 2.0));
                 float gv = max(NV / (NV * (1 - k) + k), 0);
                 float gl = max(NL / (NL * (1 - k) + k), 0);
@@ -97,12 +97,14 @@ Shader "CookTorrance_Textured"
 
                 float4 ambient  = _k_d * _k_a;
                 float4 diffuse  = _k_d * _r_d_coeff * saturate(NL);
-                float4 specular = saturate(fresnel * ndf * geo / (4 * NL * NV));
+                float4 specular = saturate(fresnel * ndf * geo / (1 * NL * NV));
                 specular.a = 1;
                 
-                insp4(1, fresnel*0.1);
-                inspf(2, ndf);
-                inspf(3, pow(geo, 50.0));
+                insp4(1, fresnel);
+                inspf(2, saturate(ndf));
+                inspf(3, geo);
+                insp4(4,  _L_int * diffuse / pow(L_dist, _L_pow));
+                insp4(5, (_L_int * diffuse + _L_int * float4(ndf, ndf, ndf, 1)) / pow(L_dist, _L_pow));
 
                 fragColor = ambient + (_L_int * diffuse + _L_int * specular) / pow(L_dist, _L_pow);
 

@@ -1,4 +1,4 @@
-#pragma shader_feature SHADER_INSPECTOR_ON
+#pragma multi_compile __ SHADER_INSPECTOR_ON
 
 #if defined(SHADER_INSPECTOR_ON)
     #define FragOut __FragOut
