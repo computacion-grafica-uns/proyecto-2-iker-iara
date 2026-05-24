@@ -24,6 +24,7 @@ Shader "BlinnPhong_Textured"
             #pragma vertex vert
             #pragma fragment frag
             #include "UnityCG.cginc"
+            #include "Assets/ShaderInspector/ShaderInspector.cginc"
                         
             struct appdata
             {
@@ -62,10 +63,10 @@ Shader "BlinnPhong_Textured"
                 return o;
             }
 
-            float4 frag(v2f v) : SV_TARGET
+            FragOut frag(v2f v) : SV_TARGET
             {
+                DEBUGGABLE;
                 fixed4 fragColor = 1;
-
 
                 float4 _k_d = tex2D(_k_d_tex, v.uv);
                 float4 _k_s = pow(_IsRoughness + (-2 * _IsRoughness + 1) * tex2D(_k_s_tex, v.uv), 2);
@@ -85,9 +86,11 @@ Shader "BlinnPhong_Textured"
                 float4 diffuse  = _k_d * _k_d_coeff * saturate(dot(L_versor, N_versor));
                 float4 specular = _k_s * _k_s_coeff * pow(saturate(dot(N_versor, H_versor)), _n);
 
+                insp4(2, pow(saturate(dot(N_versor, H_versor)), _n));
+
                 fragColor = ambient + (_L_int * diffuse + _L_int * specular) / pow(L_dist, _L_pow);
 
-                return fragColor;
+                ret(fragColor);
             }
 
             ENDCG

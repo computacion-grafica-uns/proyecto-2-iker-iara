@@ -1,16 +1,12 @@
-Shader "CookTorrance_Textured"
+Shader "CookTorrance_Frag"
 {
     Properties
     {
         _k_a("Ambient tint", Color) = (0,0,0,1)
-        [NoScaleOffset] _k_d_tex("Diffuse", 2D) = "white" {}
+        _k_d("Diffuse", Color) = (1,1,1,1)
         _r_d_coeff("Diffuse coefficient", Float) = 10
-        [NoScaleOffset] _k_s_tex("Roughness", 2D) = "white" {}
-        _r_s_coeff("Roughness coefficient", Float) = 10
+        _rp("Roughness", Range(0,1)) = 0.5
         _F_0("Reflectance", Color) = (1.022, 0.782, 0.344, 1)
-        [MaterialToggle] _FlipRoughness("Is this a roughness map instead of a specular map?", Float) = 1
-        [NoScaleOffset] _N_tex("Normal map", 2D) = "bump" {}
-        _N_coeff("Normal coefficient", Float) = 1
         _L_pos("Light position", Vector) = (0,3,0)
         _L_int("Light intensity", Float) = 1
         _L_pow("Light decay power", Float) = 2
@@ -45,9 +41,8 @@ Shader "CookTorrance_Textured"
             };
 
             float3 _L_pos;
-            float _L_int, _L_pow, _n, _r_d_coeff, _r_s_coeff, _N_coeff, _FlipRoughness;
-            float4 _k_a, _F_0;
-            sampler2D _k_d_tex, _k_s_tex, _N_tex;
+            float _L_int, _L_pow, _n, _r_d_coeff, _rp;
+            float4 _k_a, _k_d, _F_0;
 
             v2f vert(appdata i)
             {
@@ -67,16 +62,10 @@ Shader "CookTorrance_Textured"
             {
                 DEBUGGABLE;
                 fixed4 fragColor = 1;
-
-                float4 _k_d = tex2D(_k_d_tex, v.uv);
-                float4 _k_s = pow(_FlipRoughness + (-2 * _FlipRoughness + 1) * tex2D(_k_s_tex, v.uv), 2);
-                float3 normal_map = lerp(float3(0,0,1), UnpackNormal(tex2D(_N_tex, v.uv)), _N_coeff);
-
-                float3x3 TBN = transpose(float3x3(v.tangent_versor, v.bitangent_versor, v.normal_versor));
                 
                 float L_dist = length(_L_pos - v.world_pos);
                 float3 L_versor = normalize(_L_pos - v.world_pos);
-                float3 N_versor = normalize(mul(TBN, normal_map));
+                float3 N_versor = normalize(v.normal_versor);
                 float3 V_versor =  normalize(_WorldSpaceCameraPos - v.world_pos);
                 float3 H_versor = normalize((L_versor + V_versor) / length(L_versor + V_versor));
 
@@ -85,14 +74,14 @@ Shader "CookTorrance_Textured"
                 float NH = dot(N_versor, H_versor);
                 float VH = dot(V_versor, H_versor);
 
-                float rp = length(_k_s.rbg) * _r_s_coeff;
+                float rp = _rp;
                 float alpha = rp * rp;
 
                 float4 fresnel = _F_0 + (float4(1,1,1,1) - _F_0) * pow(1 - NV, 5.0);
-                float ndf = saturate(NL) * alpha * alpha / (UNITY_PI * pow(NH*NH * (alpha*alpha - 1) + 1, 2.0));
+                float ndf = saturate(NL) * alpha * alpha / (UNITY_PI * pow((NH*NH * (alpha*alpha - 1) + 1), 2.0));
                 float gv = 2 * NH * NV / VH;
                 float gl = 2 * NH * NL / VH;
-                float geo = max(0, min(1, min(gl, gv)));
+                float geo = min(1, min(gl, gv));
 
                 float4 ambient  = _k_d * _k_a;
                 float4 diffuse  = _k_d * _r_d_coeff * saturate(NL);
@@ -102,10 +91,9 @@ Shader "CookTorrance_Textured"
                 insp4(1, fresnel);
                 inspf(2, ndf);
                 inspf(3, geo);
-                inspf(4, (UNITY_PI * pow((saturate(sign(NL))*NH*NH * (alpha*alpha - 1) + 1), 2.0)));
-                //inspf(4, NH);
-                inspf(5, saturate(sign(NL)));
-                insp3(6, N_versor);
+                inspf(4, gl);
+                inspf(5, gv);
+                inspf(6, NL);
 
                 fragColor = ambient + (diffuse + specular) * _L_int / pow(L_dist, _L_pow);
 

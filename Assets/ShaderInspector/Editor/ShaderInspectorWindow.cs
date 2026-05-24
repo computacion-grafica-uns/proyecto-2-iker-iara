@@ -25,6 +25,8 @@ public class ShaderInspectorWindow : EditorWindow
         var channelStrs = channels.Select(i => $"Channel {i}").ToArray();
         selectedChannel = EditorGUILayout.IntPopup("", selectedChannel, channelStrs, channels);
 
+        this.titleContent = new GUIContent($"Shader Inspector ({selectedChannel})");
+
         // Texture display
         GUILayout.Space(10);
 
