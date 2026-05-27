@@ -2,7 +2,6 @@ Shader "BlinnPhong_Textured"
 {
     Properties
     {
-        _k_a("Ambient tint", Color) = (0,0,0,1)
         [NoScaleOffset] _k_d_tex("Diffuse", 2D) = "white" {}
         _k_d_coeff("Diffuse coefficient", Float) = 10
         [NoScaleOffset] _k_s_tex("Specular", 2D) = "white" {}
@@ -11,9 +10,6 @@ Shader "BlinnPhong_Textured"
         [NoScaleOffset] _N_tex("Normal map", 2D) = "bump" {}
         _N_coeff("Normal coefficient", Float) = 1
         _n("Shinnyness", Float) = 10
-        _L_pos("Light position", Vector) = (0,3,0)
-        _L_int("Light intensity", Float) = 1
-        _L_pow("Light decay power", Float) = 2
     }
 
     SubShader
@@ -44,10 +40,21 @@ Shader "BlinnPhong_Textured"
                 float3 bitangent_versor : TEXCOORD4;
             };
 
-            float3 _L_pos;
-            float _L_int, _L_pow, _n, _k_d_coeff, _k_s_coeff, _N_coeff, _IsRoughness;
+            float _n, _k_d_coeff, _k_s_coeff, _N_coeff, _IsRoughness;
             float4 _k_a;
             sampler2D _k_d_tex, _k_s_tex, _N_tex;
+
+            // Lights
+            #define MAX_LIGHTS 20
+            float4 _L_Position[MAX_LIGHTS];
+            float4 _L_Forward[MAX_LIGHTS];
+            float4 _L_Color[MAX_LIGHTS];
+            float _L_Intensity[MAX_LIGHTS];
+            float _L_Type[MAX_LIGHTS];
+            float _L_ConeCosine[MAX_LIGHTS];
+            float _L_ConeFalloff[MAX_LIGHTS];
+            float _L_Attenuation[MAX_LIGHTS];
+            float _L_Count;
 
             v2f vert(appdata i)
             {
@@ -67,28 +74,47 @@ Shader "BlinnPhong_Textured"
             {
                 DEBUGGABLE;
                 fixed4 fragColor = 1;
+                fixed4 brdf = 0;
 
                 float4 _k_d = tex2D(_k_d_tex, v.uv);
                 float4 _k_s = pow(_IsRoughness + (-2 * _IsRoughness + 1) * tex2D(_k_s_tex, v.uv), 2);
                 //float3 normal_map = lerp(float3(0,0,1), tex2D(_N_tex, v.uv) * 2.0 - 1.0, _N_coeff);
                 float3 normal_map = lerp(float3(0,0,1), UnpackNormal(tex2D(_N_tex, v.uv)), _N_coeff);
 
-                float3x3 TBN = transpose(float3x3(v.tangent_versor, v.bitangent_versor, v.normal_versor));
+                float3x3 TBN = transpose(float3x3(v.tangent_versor, -v.bitangent_versor, v.normal_versor));
                 
-                float L_dist = length(_L_pos - v.world_pos);
-                float3 L_versor = normalize(_L_pos - v.world_pos);
                 float3 N_versor = normalize(mul(TBN, normal_map));
                 float3 V_versor =  normalize(_WorldSpaceCameraPos - v.world_pos);
-                float3 LV = (L_versor + V_versor);
-                float3 H_versor = LV / length(LV);
 
-                float4 ambient  = _k_d * _k_a;
-                float4 diffuse  = _k_d * _k_d_coeff * saturate(dot(L_versor, N_versor));
-                float4 specular = _k_s * _k_s_coeff * pow(saturate(dot(N_versor, H_versor)), _n);
+                insp3(4, N_versor);
 
-                insp4(2, pow(saturate(dot(N_versor, H_versor)), _n));
+                for (int i = 0; i < _L_Count; i++)
+                {
+                    float coneL = 1;
+                    float3 _L_pos = _L_Position[i].xyz;
+                    float L_dist = length(_L_pos - v.world_pos);
+                    float3 L_versor = normalize(_L_pos - v.world_pos);
 
-                fragColor = ambient + (_L_int * diffuse + _L_int * specular) / pow(L_dist, _L_pow);
+                    if (_L_Type[i] == 1) // Directional light
+                    {
+                        L_dist = 0;
+                        L_versor = normalize(_L_Forward[i].xyz);
+                    }
+                    else if (_L_Type[i] == 2) // Spot light
+                    {
+                        coneL = pow(saturate((_L_ConeCosine[i] - dot(_L_Forward[i].xyz, L_versor)) / (_L_ConeCosine[i] - 1)), _L_ConeFalloff[i]);
+                    }
+
+                    float3 LV = (L_versor + V_versor);
+                    float3 H_versor = LV / length(LV);
+
+                    float4 diffuse  = _k_d * _k_d_coeff * saturate(dot(L_versor, N_versor)) * coneL;
+                    float4 specular = _k_s * _k_s_coeff * pow(saturate(dot(N_versor, H_versor)), _n);
+                    brdf += saturate((diffuse + specular) * _L_Color[i] * _L_Intensity[i] / pow(1 + L_dist, _L_Attenuation[i]));
+                }
+
+                float4 ambient = _k_d * _k_a;
+                fragColor = ambient + brdf;
 
                 ret(fragColor);
             }

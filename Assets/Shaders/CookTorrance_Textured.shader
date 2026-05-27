@@ -2,18 +2,15 @@ Shader "CookTorrance_Textured"
 {
     Properties
     {
-        _k_a("Ambient tint", Color) = (0,0,0,1)
-        [NoScaleOffset] _k_d_tex("Diffuse", 2D) = "white" {}
-        _r_d_coeff("Diffuse coefficient", Float) = 10
-        [NoScaleOffset] _k_s_tex("Roughness", 2D) = "white" {}
-        _r_s_coeff("Roughness coefficient", Float) = 10
-        _F_0("Reflectance", Color) = (1.022, 0.782, 0.344, 1)
+        [NoScaleOffset] _k_d_tex("Diffuse map", 2D) = "white" {}
+        _k_d_coeff("Diffuse coefficient", Float) = 1
+        [NoScaleOffset] _k_s_tex("Roughness map", 2D) = "white" {}
+        _k_s_coeff("Roughness map coefficient", Range(0,1)) = 1
+        _rp("Roughness RMS", Range(0,1)) = 1
+        _F_0("Reflectance", Color) = (1,1,1,1)
         [MaterialToggle] _FlipRoughness("Is this a roughness map instead of a specular map?", Float) = 1
         [NoScaleOffset] _N_tex("Normal map", 2D) = "bump" {}
         _N_coeff("Normal coefficient", Float) = 1
-        _L_pos("Light position", Vector) = (0,3,0)
-        _L_int("Light intensity", Float) = 1
-        _L_pow("Light decay power", Float) = 2
     }
 
     SubShader
@@ -44,10 +41,21 @@ Shader "CookTorrance_Textured"
                 float3 bitangent_versor : TEXCOORD4;
             };
 
-            float3 _L_pos;
-            float _L_int, _L_pow, _n, _r_d_coeff, _r_s_coeff, _N_coeff, _FlipRoughness;
+            float _n, _k_d_coeff, _k_s_coeff, _rp, _N_coeff, _FlipRoughness;
             float4 _k_a, _F_0;
             sampler2D _k_d_tex, _k_s_tex, _N_tex;
+
+            // Lights
+            #define MAX_LIGHTS 20
+            float4 _L_Position[MAX_LIGHTS];
+            float4 _L_Forward[MAX_LIGHTS];
+            float4 _L_Color[MAX_LIGHTS];
+            float _L_Intensity[MAX_LIGHTS];
+            float _L_Type[MAX_LIGHTS];
+            float _L_ConeCosine[MAX_LIGHTS];
+            float _L_ConeFalloff[MAX_LIGHTS];
+            float _L_Attenuation[MAX_LIGHTS];
+            float _L_Count;
 
             v2f vert(appdata i)
             {
@@ -67,6 +75,7 @@ Shader "CookTorrance_Textured"
             {
                 DEBUGGABLE;
                 fixed4 fragColor = 1;
+                fixed4 brdf = 0;
 
                 float4 _k_d = tex2D(_k_d_tex, v.uv);
                 float4 _k_s = pow(_FlipRoughness + (-2 * _FlipRoughness + 1) * tex2D(_k_s_tex, v.uv), 2);
@@ -74,40 +83,56 @@ Shader "CookTorrance_Textured"
 
                 float3x3 TBN = transpose(float3x3(v.tangent_versor, v.bitangent_versor, v.normal_versor));
                 
-                float L_dist = length(_L_pos - v.world_pos);
-                float3 L_versor = normalize(_L_pos - v.world_pos);
                 float3 N_versor = normalize(mul(TBN, normal_map));
                 float3 V_versor =  normalize(_WorldSpaceCameraPos - v.world_pos);
-                float3 H_versor = normalize((L_versor + V_versor) / length(L_versor + V_versor));
-
                 float NV = dot(N_versor, V_versor);
-                float NL = dot(N_versor, L_versor);
-                float NH = dot(N_versor, H_versor);
-                float VH = dot(V_versor, H_versor);
 
-                float rp = length(_k_s.rbg) * _r_s_coeff;
+                float rp = _rp;
                 float alpha = rp * rp;
 
                 float4 fresnel = _F_0 + (float4(1,1,1,1) - _F_0) * pow(1 - NV, 5.0);
-                float ndf = saturate(NL) * alpha * alpha / (UNITY_PI * pow(NH*NH * (alpha*alpha - 1) + 1, 2.0));
-                float gv = 2 * NH * NV / VH;
-                float gl = 2 * NH * NL / VH;
-                float geo = max(0, min(1, min(gl, gv)));
+
+                for (int i = 0; i < _L_Count; i++)
+                {
+                    // Default for point light
+                    float coneL = 1;
+                    float L_dist = length(_L_Position[i].xyz - v.world_pos);
+                    float3 L_versor = normalize(_L_Position[i].xyz - v.world_pos);
+                    float3 H_versor = normalize((L_versor + V_versor) / length(L_versor + V_versor));
+
+                    float NL = dot(N_versor, L_versor);
+                    float NH = dot(N_versor, H_versor);
+                    float VH = dot(V_versor, H_versor);
+                    
+                    if (_L_Type[i] == 1) // Directional light
+                    {
+                        L_dist = 0;
+                        L_versor = normalize(_L_Forward[i].xyz);
+                        H_versor = normalize((L_versor + V_versor) / length(L_versor + V_versor));
+                        NL = dot(N_versor, L_versor);
+                        NH = dot(N_versor, H_versor);
+                    }
+                    else if (_L_Type[i] == 2) // Spot light
+                    {
+                        coneL = pow(saturate((_L_ConeCosine[i] - dot(_L_Forward[i].xyz, L_versor)) / (_L_ConeCosine[i] - 1)), _L_ConeFalloff[i]);
+                    }
+                    
+                    float ndf = alpha * alpha / (UNITY_PI * pow((NH*NH * (alpha*alpha - 1) + 1), 2.0));
+                    float gv = 2 * NH * NV / VH;
+                    float gl = 2 * NH * NL / VH;
+                    float geo = min(1, min(gl, gv));
+
+                    float4 diffuse  = _k_d * _k_d_coeff * coneL;
+                    float4 specular = fresnel * ndf * geo / (4 * NL * NV) * length(_k_s.rbg) * _k_s_coeff;
+                    specular.a = 1;
+
+                    brdf += saturate(diffuse + specular) * _L_Color[i] * _L_Intensity[i] / pow(1 + L_dist, _L_Attenuation[i]) * saturate(NL);
+                }
 
                 float4 ambient  = _k_d * _k_a;
-                float4 diffuse  = _k_d * _r_d_coeff * saturate(NL);
-                float4 specular = saturate(fresnel * ndf * geo / (4 * NL * NV));
-                specular.a = 1;
-                
-                insp4(1, fresnel);
-                inspf(2, ndf);
-                inspf(3, geo);
-                inspf(4, (UNITY_PI * pow((saturate(sign(NL))*NH*NH * (alpha*alpha - 1) + 1), 2.0)));
-                //inspf(4, NH);
-                inspf(5, saturate(sign(NL)));
-                insp3(6, N_versor);
+                fragColor = ambient + brdf;
 
-                fragColor = ambient + (diffuse + specular) * _L_int / pow(L_dist, _L_pow);
+                insp3(6, N_versor);
 
                 ret(fragColor);
             }

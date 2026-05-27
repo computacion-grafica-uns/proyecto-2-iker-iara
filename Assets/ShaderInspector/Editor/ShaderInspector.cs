@@ -117,7 +117,10 @@ public static class ShaderInspector
             return;
         }
 
-        var cameraObj = new GameObject("ShaderInspector_Camera");
+        var cameraObj = new GameObject("ShaderInspector_Camera")
+        {
+            hideFlags = HideFlags.HideAndDontSave
+        };
         cam = cameraObj.AddComponent<Camera>();
 
         SetupRenderTargets();
