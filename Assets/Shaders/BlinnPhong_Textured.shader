@@ -108,9 +108,10 @@ Shader "BlinnPhong_Textured"
                     float3 LV = (L_versor + V_versor);
                     float3 H_versor = LV / length(LV);
 
-                    float4 diffuse  = _k_d * _k_d_coeff * saturate(dot(L_versor, N_versor)) * coneL;
+                    float4 diffuse  = _k_d * _k_d_coeff * saturate(dot(L_versor, N_versor));
                     float4 specular = _k_s * _k_s_coeff * pow(saturate(dot(N_versor, H_versor)), _n);
-                    brdf += saturate((diffuse + specular) * _L_Color[i] * _L_Intensity[i] / pow(1 + L_dist, _L_Attenuation[i]));
+
+                    brdf += saturate((diffuse + specular) * coneL * _L_Color[i] * _L_Intensity[i] / pow(1 + L_dist, _L_Attenuation[i]));
                 }
 
                 float4 ambient = _k_d * _k_a;

@@ -122,11 +122,11 @@ Shader "CookTorrance_Textured"
                     float gl = 2 * NH * NL / VH;
                     float geo = min(1, min(gl, gv));
 
-                    float4 diffuse  = _k_d * _k_d_coeff * coneL;
+                    float4 diffuse  = _k_d * _k_d_coeff;
                     float4 specular = fresnel * ndf * geo / (4 * NL * NV) * length(_k_s.rbg) * _k_s_coeff;
                     specular.a = 1;
 
-                    brdf += saturate(diffuse + specular) * _L_Color[i] * _L_Intensity[i] / pow(1 + L_dist, _L_Attenuation[i]) * saturate(NL);
+                    brdf += saturate(diffuse + specular) * coneL * _L_Color[i] * _L_Intensity[i] / pow(1 + L_dist, _L_Attenuation[i]) * saturate(NL);
                 }
 
                 float4 ambient  = _k_d * _k_a;

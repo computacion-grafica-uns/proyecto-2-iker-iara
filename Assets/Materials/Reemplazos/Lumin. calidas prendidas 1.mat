@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Luminarias
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: Lumin. calidas prendidas 1
+  m_Shader: {fileID: 4800000, guid: 86c43dc0d3d49974a85dec3c445336c3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -65,6 +65,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _diffuse:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _k_d_tex:
         m_Texture: {fileID: 2800000, guid: 1d440e4ce10f4f94ba3acc59fbafabf5, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -108,4 +112,5 @@ Material:
     - _L_pos: {r: 1, g: 0.82, b: -0.6, a: 1}
     - _k_a: {r: 0.13207549, g: 0.12424082, b: 0.080366686, a: 1}
     - _k_d: {r: 1, g: 1, b: 1, a: 1}
+    - _tint: {r: 1, g: 0.8690218, b: 0.759, a: 1}
   m_BuildTextureStacks: []

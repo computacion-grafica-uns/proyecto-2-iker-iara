@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Planta grande hojas
-  m_Shader: {fileID: 4800000, guid: 90fa9eea048ecc645a73dad1f98be2bd, type: 3}
+  m_Name: Lumin. frias prendidas
+  m_Shader: {fileID: 4800000, guid: 86c43dc0d3d49974a85dec3c445336c3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _ALPHAPREMULTIPLY_ON
+  - _FLIPROUGHNESS_ON
   - _ISROUGHNESS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -25,10 +25,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Albedo:
-        m_Texture: {fileID: 2800000, guid: 2e676ee3a4a94a24995c2e1fdee5fbfe, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -50,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 38151d2f6f2079b4b89cfb8d572a8c2b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9cf9451bfafcbb649b39c3eb455dab06, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -69,8 +65,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _diffuse:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _k_d_tex:
-        m_Texture: {fileID: 2800000, guid: 2e676ee3a4a94a24995c2e1fdee5fbfe, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1d440e4ce10f4f94ba3acc59fbafabf5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _k_s_tex:
@@ -82,15 +82,16 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DstBlend: 10
+    - _DstBlend: 0
+    - _FlipRoughness: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
     - _IsRoughness: 1
-    - _L_int: 6
+    - _L_int: 6.85
     - _L_pow: 2
     - _Metallic: 0
-    - _Mode: 3
+    - _Mode: 0
     - _N_coeff: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -98,16 +99,18 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _ZWrite: 0
-    - _a_coeff: 1
+    - _ZWrite: 1
     - _k_d_coeff: 1
-    - _k_s_coeff: 10
+    - _k_s_coeff: 1
     - _n: 10
-    - _r: 0
+    - _r_d_coeff: 1
+    - _rp: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _F_0: {r: 0, g: 0, b: 0, a: 1}
-    - _L_pos: {r: 1, g: 2.8, b: -0.6, a: 1}
+    - _F_0: {r: 1, g: 1, b: 1, a: 1}
+    - _L_pos: {r: 1, g: 0.82, b: -0.6, a: 1}
     - _k_a: {r: 0.13207549, g: 0.12424082, b: 0.080366686, a: 1}
+    - _k_d: {r: 1, g: 1, b: 1, a: 1}
+    - _tint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
