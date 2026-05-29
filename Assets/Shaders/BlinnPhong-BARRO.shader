@@ -68,10 +68,18 @@ Shader "BlinnPhong-BARRO"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                fixed4 normalmap = tex2D(_NormalMap, i.uv);
-                normalmap = normalmap * _NormalStrenght;
-
-                float3 N = normalize(i.worldNorm + normalmap.xyz);
+                // Tangentless TBN from screen-space derivatives (Schüler 2009)
+                float3 dPdx = ddx(i.worldPos);
+                float3 dPdy = ddy(i.worldPos);
+                float2 dUdx = ddx(i.uv);
+                float2 dUdy = ddy(i.uv);
+                float3 T = normalize( dPdx * dUdy.y - dPdy * dUdx.y);
+                float3 B = normalize(-dPdx * dUdy.x + dPdy * dUdx.x);
+                float3 Ng = normalize(i.worldNorm);
+                float3x3 TBN = transpose(float3x3(T, B, Ng));
+                float3 normalTS = UnpackNormal(tex2D(_NormalMap, i.uv));
+                normalTS.xy *= _NormalStrenght;
+                float3 N = normalize(mul(TBN, normalTS));
                 float3 V = normalize(_WorldSpaceCameraPos - i.worldPos);
 
                 fixed4 albedo = tex2D(_MainTex, i.uv);

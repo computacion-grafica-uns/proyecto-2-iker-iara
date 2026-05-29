@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Barro-BP
-  m_Shader: {fileID: 4800000, guid: d43f994f3e610b741a27c88a548c7189, type: 3}
+  m_Name: Barro-TS
+  m_Shader: {fileID: 4800000, guid: cab84908485601645ab6553b19ba9081, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: aa30c9274e589e04997199011da010ce, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -74,22 +74,26 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalStrenght: 1
+    - _NormalStrength: 0.53
     - _OcclusionStrength: 1
+    - _OutlineWidth: 0.298
     - _Parallax: 0.02
-    - _Shininess: 42.65
+    - _Shininess: 40
     - _SmoothnessTextureChannel: 0
-    - _SpecStrength: 0
+    - _SpecHalftoneIntensity: 1
+    - _SpecHalftoneScale: 0.001
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _StripeAngle: 0.785
+    - _StripeScale: 0.5
+    - _StripeWidth: 0.5
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _AmbientColor: {r: 0.2, g: 0.06482377, b: 0, a: 1}
+    - _BaseColor: {r: 0.4490565, g: 0.28216243, b: 0.1347169, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Ia: {r: 1, g: 1, b: 1, a: 1}
-    - _Ip: {r: 1, g: 1, b: 1, a: 1}
-    - _Ka: {r: 0, g: 0, b: 0, a: 1}
-    - _Kd: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
-    - _Ks: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor2: {r: 0.6075471, g: 0.6075471, b: 0.6075471, a: 1}
   m_BuildTextureStacks: []
