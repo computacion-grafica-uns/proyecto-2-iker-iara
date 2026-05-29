@@ -7,7 +7,7 @@ Shader "ToonShader-Barro"
         _SpecColor2 ("Specular Color", Color) = (1, 0.7, 0.8, 1)
         _Shininess ("Shininess", Range(1, 200)) = 40
         _OutlineColor("Outline color", Color) = (0, 0, 0, 1)
-        _OutlineWidth("Grosor del borde", Range(0,0.5)) = 0.1
+        _OutlineWidth("Grosor del borde", Range(0,2)) = 0.1
 
         _NormalMap ("Normal Map", 2D) = "bump" {}
         _NormalStrength ("Normal Strength", Range(0, 1)) = 1.0
