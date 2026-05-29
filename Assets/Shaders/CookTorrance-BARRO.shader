@@ -3,6 +3,8 @@ Shader "CookTorrance-BARRO"
     Properties
     {
         _MainTex("Albedo", 2D) = "white" {}
+        _NormalMap("Normal Map", 2D) = "bump" {}
+        _NormalStrength("Normal Strength", Range(0, 1)) = 1.0
         _k_d("Diffuse tint", Color) = (1,1,1,1)
         _r_d_coeff("Diffuse coefficient", Float) = 10
         _rp("Roughness", Range(0,1)) = 0.5
@@ -38,6 +40,8 @@ Shader "CookTorrance-BARRO"
             float4 _k_a, _k_d, _F_0;
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            sampler2D _NormalMap;
+            float _NormalStrength;
 
             // Lights
             #define MAX_LIGHTS 20
@@ -69,8 +73,20 @@ Shader "CookTorrance-BARRO"
                 fixed4 fragColor = 0;
                 fixed4 brdf = 0;
 
-                float4 albedo   = tex2D(_MainTex, v.uv);
-                float3 N_versor = normalize(v.normal_versor);
+                float4 albedo = tex2D(_MainTex, v.uv);
+
+                // Tangentless TBN from screen-space derivatives (Schüler 2009)
+                float3 N = normalize(v.normal_versor);
+                float3 dPdx = ddx(v.world_pos.xyz);
+                float3 dPdy = ddy(v.world_pos.xyz);
+                float2 dUdx = ddx(v.uv);
+                float2 dUdy = ddy(v.uv);
+                float3 T =  normalize(dPdx * dUdy.y - dPdy * dUdx.y);
+                float3 B =  normalize(-dPdx * dUdy.x + dPdy * dUdx.x);
+                float3x3 TBN = transpose(float3x3(T, B, N));
+                float3 normalTS = UnpackNormal(tex2D(_NormalMap, v.uv));
+                normalTS.xy *= _NormalStrength;
+                float3 N_versor = normalize(mul(TBN, normalTS));
                 float3 V_versor = normalize(_WorldSpaceCameraPos - v.world_pos);
 
                 float NV    = dot(N_versor, V_versor);
