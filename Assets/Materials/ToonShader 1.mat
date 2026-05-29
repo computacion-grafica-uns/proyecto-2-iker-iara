@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ToonShader
+  m_Name: ToonShader 1
   m_Shader: {fileID: 4800000, guid: 705decbcabb3a944a8aa6ee3596cd894, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
