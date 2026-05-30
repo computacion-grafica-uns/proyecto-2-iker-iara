@@ -16,7 +16,7 @@ Shader "ToonShader"
         _StripeAngle ("Stripe Angle",  Range(0, 6.28)) = 0.785  // ~45°
 
         //variables de control para el efecto halftone/pintura del termino especular.
-        _SpecHalftoneScale ("Spec Halftone Scale", Range(0.001, 0.1)) = 0.1
+        _SpecHalftoneScale ("Spec Halftone Scale", Range(0.001, 1)) = 0.1
         _SpecHalftoneIntensity ("Spec Halftone Intensity", Range(0, 1)) = 0.4
     }
     SubShader

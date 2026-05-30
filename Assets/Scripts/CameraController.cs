@@ -1,18 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+// Base class for all cameras in the project.
+// Owns the Update loop; subclasses implement input and movement.
+public abstract class CameraController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected Camera cam;
+
+    protected virtual void Awake()
     {
-        
+        cam = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (!cam.enabled) return;
+        HandleInput();
+        UpdateTransform();
     }
+
+    // Read input and store it into fields (called before UpdateTransform).
+    protected abstract void HandleInput();
+
+    // Apply stored input to the camera's position/rotation.
+    protected abstract void UpdateTransform();
+
+    // SceneManager calls these to swap the active camera.
+    public virtual void Activate()   { cam.enabled = true; }
+    public virtual void Deactivate() { cam.enabled = false; }
 }
