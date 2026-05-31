@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ToonShader 1
-  m_Shader: {fileID: 4800000, guid: 705decbcabb3a944a8aa6ee3596cd894, type: 3}
+  m_Name: ProceduralWood
+  m_Shader: {fileID: 4800000, guid: 2db1da9d9a8a2e54ead0d16375494e78, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -68,30 +68,27 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HalfToneSA: 118
-    - _HalfToneSD: 114
-    - _HalfToneSS: 200
+    - _GrainScale: 2.7
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.0001
+    - _Octaves: 4.9
     - _Parallax: 0.02
-    - _Shininess: 35
+    - _RingFreq: -1.71
+    - _RingSharpness: 0.5
+    - _Shininess: 51
     - _SmoothnessTextureChannel: 0
-    - _SpecHalftoneIntensity: 0.736
-    - _SpecHalftoneScale: 0.1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StripeAngle: 2.37
-    - _StripeScale: 0.207
-    - _StripeWidth: 0.664
+    - _Turbulence: -0.8
     - _UVSec: 0
+    - _UseWorldSpace: 0
     - _ZWrite: 1
     m_Colors:
-    - _AmbientColor: {r: 0.19999996, g: 0, b: 0, a: 1}
-    - _BaseColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DarkWood: {r: 0.122641504, g: 0.048180595, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor2: {r: 1, g: 0.7, b: 0.8, a: 1}
+    - _LightWood: {r: 0.7075472, g: 0.34734136, b: 0, a: 1}
+    - _SpecColor2: {r: 0, g: 0, b: 0, a: 1}
+    - _k_a: {r: 0.09999997, g: 0.09999997, b: 0.09999997, a: 1}
   m_BuildTextureStacks: []

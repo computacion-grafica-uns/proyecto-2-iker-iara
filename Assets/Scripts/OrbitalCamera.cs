@@ -26,6 +26,10 @@ public class OrbitalCamera : MonoBehaviour
     public float panSpeed = 0.5f;
     public bool allowPanning = true;
 
+    [Header("Target Cycle")]
+    public Transform[] targets = new Transform[0]; // drag objects here in the inspector
+    int _targetIndex = 0;
+
     [Header("Selection")]
     public LayerMask selectableMask = ~0; // which layers can be selected
     public float doubleClickTime = 0.3f;  // max interval between clicks for a double-click
@@ -59,6 +63,13 @@ public class OrbitalCamera : MonoBehaviour
             target = defaultTarget;
             return;
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1) && targets.Length > 0)
+        {
+            _targetIndex = (_targetIndex + 1) % targets.Length;
+            SetTarget(targets[_targetIndex]);
+            return;
+        }
         if (!Input.GetMouseButtonDown(0)) return; // left button down only
 
         float time = Time.unscaledTime;
@@ -84,7 +95,7 @@ public class OrbitalCamera : MonoBehaviour
         }
     }
 
-    void SetTarget(Transform newTarget)
+    public void SetTarget(Transform newTarget)
     {
         target = newTarget;
         targetOffset = Vector3.zero;
