@@ -65,7 +65,8 @@ Shader "BlinnPhong_Frag_Transp"
 
                 float4 ambient  = _k_a;
                 float4 diffuse  = _k_d * saturate(dot(L_versor, N_versor));
-                float4 specular = _k_s * pow(saturate(dot(N_versor, H_versor)), _n);
+                float  fresnel  = 0.04 + 0.96 * pow(1.0 - saturate(dot(N_versor, V_versor)), 5.0);
+                float4 specular = _k_s * pow(saturate(dot(N_versor, H_versor)), _n) * (1.0 + 4.0 * fresnel);
 
                 float3 color = ambient + (_L_int * diffuse + _L_int * specular) / pow(L_dist, _L_pow);
                 return float4(color, _Alpha);

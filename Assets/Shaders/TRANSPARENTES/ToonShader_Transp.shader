@@ -5,7 +5,7 @@ Shader "ToonShader_Transp"
         _BaseColor ("Base Color", Color) = (0.8, 0.1, 0.1, 1)
         _AmbientColor ("Ambient Color", Color) = (0.2, 0.0, 0.0, 1)
         _SpecColor2 ("Specular Color", Color) = (1, 0.7, 0.8, 1)
-        _Shininess ("Shininess", Range(1, 200)) = 40
+        _Shininess ("Shininess", Range(1, 200)) = 120
         _OutlineColor("Outline color", Color) = (0, 0, 0, 1)
         _OutlineWidth("Grosor del borde", Range(0,0.5)) = 0.1
         _StripeScale ("Stripe Scale",  Range(0,0.5)) = 0.5
@@ -153,7 +153,7 @@ Shader "ToonShader_Transp"
                 }
 
                 float diffBand  = floor(saturate(totalNdotL) * 3.0) / 3.0;
-                float specBand  = step(0.5, totalSpec);
+                float specBand  = step(0.8, totalSpec);
 
                 float coreShadow   = 1.0 - step(0.01, diffBand);
                 float stripeMask   = stripes(screenUV, _StripeAngle, _StripeScale, _StripeWidth);
