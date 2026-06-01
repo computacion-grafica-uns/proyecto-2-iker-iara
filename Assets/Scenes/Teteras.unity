@@ -1603,7 +1603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5b86c5ea4a7aade46881d6aac7ae9b5f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 29.65
+      value: 29.66
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5b86c5ea4a7aade46881d6aac7ae9b5f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1641,6 +1641,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b825b69977dec4f4490f7320b42fb471, type: 2}
+    - target: {fileID: 764220876610305960, guid: 5b86c5ea4a7aade46881d6aac7ae9b5f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5b86c5ea4a7aade46881d6aac7ae9b5f, type: 3}
       propertyPath: m_Name
       value: cook-transparente

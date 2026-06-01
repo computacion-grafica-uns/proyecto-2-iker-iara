@@ -5,7 +5,7 @@ Shader "CookTorrance_Frag_Transp"
         _k_d("Diffuse", Color) = (1,1,1,1)
         _r_d_coeff("Diffuse coefficient", Float) = 10
         _rp("Roughness", Range(0,1)) = 0.5
-        _F_0("Reflectance", Color) = (1.022, 0.782, 0.344, 1)
+        _F_0("Reflectance", Color) = (0.04, 0.04, 0.04, 1)
         _Alpha("Alpha", Range(0,1)) = 1
     }
 
