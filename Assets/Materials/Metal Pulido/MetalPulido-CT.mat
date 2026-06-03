@@ -128,7 +128,7 @@ Material:
     - _ReflectionIntensity: 2
     - _Roughness: 0.3
     - _RoughnessMultiplier: 1
-    - _RoughnessScale: 0.476
+    - _RoughnessScale: 0.482
     - _RoughnessX: 0.05
     - _RoughnessY: 0.6
     - _SmoothnessTextureChannel: 0
@@ -138,7 +138,7 @@ Material:
     - _ZWrite: 1
     - _k_d_coeff: 6.77
     - _k_s_coeff: 1
-    - _rp: 0.67
+    - _rp: 0.739
     - _rp_B: 0.77
     - _rp_T: 0.532
     m_Colors:

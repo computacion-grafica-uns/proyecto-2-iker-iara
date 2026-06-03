@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MetalPulido-BP
-  m_Shader: {fileID: 4800000, guid: 89c6d4a9d7c5d5844a05d1fed578a962, type: 3}
+  m_Shader: {fileID: 4800000, guid: 6e5a18c7742a05449bb90deccf841889, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -108,8 +108,8 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _IsRoughness: 1
-    - _L_int: 24.3
-    - _L_pow: 0.4
+    - _L_int: 19.46
+    - _L_pow: 0.31
     - _Metallic: 0
     - _Mode: 0
     - _N_coeff: 2.34
@@ -130,6 +130,6 @@ Material:
     - _F_0: {r: 1, g: 1, b: 1, a: 1}
     - _L_pos: {r: 0, g: 3, b: 0, a: 1}
     - _k_a: {r: 0, g: 0, b: 0, a: 1}
-    - _k_d: {r: 0, g: 0, b: 0, a: 1}
-    - _k_s: {r: 1, g: 1, b: 1, a: 1}
+    - _k_d: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+    - _k_s: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
   m_BuildTextureStacks: []
