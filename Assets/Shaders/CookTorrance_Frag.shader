@@ -111,11 +111,11 @@ Shader "CookTorrance_Frag"
                     float gl = 2 * NH * NL / VH;
                     float geo = min(1, min(gl, gv));
 
-                    float4 diffuse  = _k_d * _r_d_coeff * saturate(NL) * coneL;
+                    float4 diffuse  = _k_d * _r_d_coeff * saturate(NL);
                     float4 specular = saturate(fresnel * ndf * geo / (4 * NL * NV));
                     specular.a = 1;
 
-                    brdf += (diffuse + specular) * _L_Color[i] * _L_Intensity[i] / pow(1 + L_dist, _L_Attenuation[i]);
+                    brdf += (diffuse + specular) * coneL * _L_Color[i] * _L_Intensity[i] / pow(1 + L_dist, _L_Attenuation[i]);
                 }
 
                 float4 ambient = _k_d * _k_a;

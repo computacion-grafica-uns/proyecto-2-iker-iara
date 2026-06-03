@@ -151,7 +151,7 @@ Shader "CookTorrance_PBR_Metalness"
                     outgoing_radiance += max(total_brdf * incident_radiance * saturate(NL), 0);
                 }
 
-                float3 ambient  = _k_a.rgb * albedo * ao;
+                float3 ambient  = _k_a.rgb * albedo * ao * (1 - metalness);
                 fragColor = float4(ambient + outgoing_radiance, 1);
 
                 ret(fragColor);
