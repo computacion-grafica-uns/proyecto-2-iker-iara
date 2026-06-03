@@ -47,6 +47,7 @@ public class FPCamera : MonoBehaviour
         ZenithLookaround(zenith * mouseYSense);
 
         Cursor.visible = (toggleCursor && !Cursor.visible) || (!toggleCursor && Cursor.visible);
+        Cursor.lockState = Cursor.visible ? CursorLockMode.None : CursorLockMode.Locked;
 
         // Move
         Move(h, v, sprint, jump);
