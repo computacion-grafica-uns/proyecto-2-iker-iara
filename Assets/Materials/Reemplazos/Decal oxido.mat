@@ -8,12 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Decal oxido
-  m_Shader: {fileID: 4800000, guid: 8c2f2582ac0a9074f9d9bf2d7d5c42fe, type: 3}
+  m_Shader: {fileID: 4800000, guid: 90fa9eea048ecc645a73dad1f98be2bd, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON
+  - _ISROUGHNESS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,6 +25,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: 62a63789d1d6ef04d83e3be23eb2f3d6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -81,6 +86,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _IsRoughness: 1
     - _L_int: 6
     - _L_pow: 2
     - _Metallic: 0
@@ -93,12 +99,15 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 0
+    - _a_coeff: 1
     - _k_d_coeff: 1
     - _k_s_coeff: 10
     - _n: 10
+    - _r: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _F_0: {r: 0, g: 0, b: 0, a: 1}
     - _L_pos: {r: 1, g: 2.8, b: -0.6, a: 1}
     - _k_a: {r: 0.13207549, g: 0.12424082, b: 0.080366686, a: 1}
   m_BuildTextureStacks: []

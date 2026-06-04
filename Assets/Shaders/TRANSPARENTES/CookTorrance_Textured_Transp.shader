@@ -6,6 +6,7 @@ Shader "CookTorrance_Textured_Transp"
         _a_coeff("Transparency coeff", Float) = 1
         _r("Roughness", Range(0,1)) = 1
         _F_0("Reflectance", Color) = (1,1,1,1)
+        _FresnelStrength("Fresnel Strength", Range(0,1)) = 1
         [NoScaleOffset] _N_tex("Normal map", 2D) = "bump" {}
         _N_coeff("Normal coefficient", Float) = 1
     }
@@ -43,7 +44,7 @@ Shader "CookTorrance_Textured_Transp"
                 float3 bitangent_versor : TEXCOORD4;
             };
 
-            float _n, _r, _N_coeff, _a_coeff;
+            float _n, _r, _N_coeff, _a_coeff, _FresnelStrength;
             float4 _k_a, _F_0;
             sampler2D _Albedo, _N_tex;
 
@@ -139,10 +140,17 @@ Shader "CookTorrance_Textured_Transp"
                     float3 incident_radiance = L_cone * L_color * L_intensity / pow(1 + L_dist, L_attenuation);
 
                     outgoing_radiance += max(total_brdf * incident_radiance * saturate(NL), 0);
-                }
 
+                    if (floor(_Time.y % _L_Count) == i) // Only show the first 3 lights in the inspector to avoid clutter
+                    {
+                        insp3(1, brdf_diffuse);
+                        insp3(2, brdf_specular);
+                        insp3(3, total_brdf);
+                    }
+                }
+                
                 float3 ambient  = _k_a.rgb * albedo;
-                fragColor = float4(ambient + outgoing_radiance, max(albedo.a / _a_coeff, fresnel_glass.r));
+                fragColor = float4(ambient + outgoing_radiance, saturate(max(albedo.a / _a_coeff, fresnel_glass.r * _FresnelStrength)));
 
                 ret(fragColor);
             }

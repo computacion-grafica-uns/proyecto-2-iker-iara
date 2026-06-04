@@ -115,7 +115,7 @@ Material:
     - _ZWrite: 1
     - _a_coeff: 1
     - _k_d_coeff: 1
-    - _k_s_coeff: 10
+    - _k_s_coeff: 1
     - _n: 10
     - _r: 1
     - _r_d_coeff: 1

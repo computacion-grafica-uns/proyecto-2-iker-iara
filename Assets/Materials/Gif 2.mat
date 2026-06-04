@@ -87,9 +87,9 @@ Material:
     - _ZWrite: 1
     - _k_d_coeff: 1
     - _k_s_coeff: 1
-    - _n: 7.77
+    - _n: 7.67
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _k_s: {r: 1, g: 1, b: 1, a: 1}
+    - _k_s: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   m_BuildTextureStacks: []
