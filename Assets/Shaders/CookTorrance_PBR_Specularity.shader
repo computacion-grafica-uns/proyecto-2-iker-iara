@@ -90,16 +90,15 @@ Shader "CookTorrance_PBR_Specularity"
                 float3 V_versor =  normalize(_WorldSpaceCameraPos - v.world_pos.xyz);
                 float NV = dot(N_versor, V_versor);
 
-                // Debug
-                insp4(1, albedo);
-                insp3(2, reflectivity);
-                inspf(3, roughness);
-                insp3(4, N_versor);
-                insp3(5, normal);
-                insp3(6, reflectivity);
-
                 float alpha = roughness * roughness;
                 float3 fresnel = reflectivity + (float3(1,1,1) - reflectivity) * pow(1 - NV, 5.0);
+
+                // Debug
+                insp4(1, albedo);
+                inspf(2, alpha);
+                insp3(3, N_versor);
+                insp3(4, normal);
+                insp3(5, reflectivity);
 
                 for (int i = 0; i < _L_Count; i++)
                 {

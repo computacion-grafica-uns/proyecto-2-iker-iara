@@ -110,6 +110,13 @@ Shader "CookTorrance_Anisotropic_GGX"
 
                 float3 fresnel = reflectivity + (float3(1,1,1) - reflectivity) * pow(1 - NV, 5.0);
 
+                // Debug
+                insp4(1, albedo);
+                insp2(2, float2(alpha_u, alpha_v));
+                insp3(3, N_versor);
+                insp3(4, normal);
+                insp3(5, reflectivity);
+
                 for (int i = 0; i < _L_Count; i++)
                 {
                     // Grab the values for the current light

@@ -81,6 +81,12 @@ Shader "CookTorrance_Frag"
 
                 float4 fresnel = _F_0 + (float4(1,1,1,1) - _F_0) * pow(1 - NV, 5.0);
 
+                insp4(1, _k_d);
+                inspf(2, alpha);
+                insp3(3, N_versor);
+                insp3(4, float3(0,0,1));
+                insp3(5, _F_0.rgb);
+
                 for (int i = 0; i < _L_Count; i++)
                 {
                     // Default for point light

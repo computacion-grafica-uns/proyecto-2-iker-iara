@@ -86,7 +86,11 @@ Shader "BlinnPhong_Textured"
                 float3 N_versor = normalize(mul(TBN, normal_map));
                 float3 V_versor =  normalize(_WorldSpaceCameraPos - v.world_pos);
 
-                insp3(4, N_versor);
+                insp4(1, _k_d);
+                inspf(2, 1-exp(-_n));
+                insp3(3, N_versor);
+                insp3(4, float3(0,0,1));
+                insp4(5, _k_s);
 
                 for (int i = 0; i < _L_Count; i++)
                 {

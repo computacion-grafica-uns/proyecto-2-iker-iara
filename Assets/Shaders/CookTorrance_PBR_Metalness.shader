@@ -97,11 +97,10 @@ Shader "CookTorrance_PBR_Metalness"
 
                 // Debug
                 insp4(1, albedo);
-                inspf(2, metalness);
-                inspf(3, roughness);
-                insp3(4, N_versor);
-                insp3(5, normal);
-                insp3(6, reflectivity);
+                inspf(2, alpha);
+                insp3(3, N_versor);
+                insp3(4, normal);
+                insp3(5, reflectivity);
 
                 for (int i = 0; i < _L_Count; i++)
                 {

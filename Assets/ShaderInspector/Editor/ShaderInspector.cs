@@ -9,6 +9,8 @@ public static class ShaderInspector
 {
     public const int CHANNEL_COUNT = 8;
     public const int SAMPLE_SIZE = 17;
+    public const int RENDER_TARGET_WIDTH = 1280;
+    public const int RENDER_TARGET_HEIGHT = 1280;
     public const int DEPTHBUFFER_SIZE = 24;
     public const string SHADER_KEYWORD = "SHADER_INSPECTOR_ON";
 
@@ -36,6 +38,9 @@ public static class ShaderInspector
         if (sceneCam == null || cam == null) return;
 
         cam.transform.SetPositionAndRotation(sceneCam.transform.position, sceneCam.transform.rotation);
+        cam.fieldOfView = sceneCam.fieldOfView;
+        cam.nearClipPlane = sceneCam.nearClipPlane;
+        cam.farClipPlane = sceneCam.farClipPlane;
 
         // Render to all targets
         var buffers = renderTextures.Select(rt => rt.colorBuffer).ToArray();
@@ -78,7 +83,7 @@ public static class ShaderInspector
 
         for (int i = 0; i < CHANNEL_COUNT; i++)
         {
-            renderTextures[i] = new RenderTexture(Screen.width, Screen.height, DEPTHBUFFER_SIZE, RenderTextureFormat.ARGBFloat)
+            renderTextures[i] = new RenderTexture(RENDER_TARGET_WIDTH, RENDER_TARGET_HEIGHT, DEPTHBUFFER_SIZE, RenderTextureFormat.ARGBFloat)
             {
                 filterMode = FilterMode.Point,
             };
