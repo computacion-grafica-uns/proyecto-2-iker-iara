@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Acero cepillado
-  m_Shader: {fileID: 4800000, guid: ac32e601fa752c44889d2bde1a0c52d2, type: 3}
+  m_Name: Madera proc
+  m_Shader: {fileID: 4800000, guid: 2db1da9d9a8a2e54ead0d16375494e78, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -39,10 +39,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Diffuse:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -55,10 +51,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -67,13 +59,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _TangentMap:
-        m_Texture: {fileID: 2800000, guid: fca226fcab72c1a4b9e7527ced48b357, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Aniso: -0.79
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -81,23 +68,27 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _GrainScale: 400
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Octaves: 4.54
     - _Parallax: 0.02
-    - _Roughness: 0.639
+    - _RingFreq: 11.95
+    - _RingSharpness: 2
+    - _Shininess: 9
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Turbulence: 2
     - _UVSec: 0
+    - _UseWorldSpace: 0
     - _ZWrite: 1
-    - _r_d_coeff: 1
-    - _rp: 0.08
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Diffuse: {r: 0.3962264, g: 0.36445352, b: 0.36445352, a: 1}
+    - _DarkWood: {r: 0.37999994, g: 0.18999997, b: 0.06999998, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _F_0: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
-    - _Reflectance: {r: 1, g: 1, b: 1, a: 1}
-    - _k_d: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
+    - _LightWood: {r: 0.8, g: 0.52, b: 0.24999997, a: 1}
+    - _SpecColor2: {r: 0.29999998, g: 0.19999996, b: 0.09999997, a: 1}
+    - _k_a: {r: 0.09999997, g: 0.09999997, b: 0.09999997, a: 1}
   m_BuildTextureStacks: []
