@@ -1,7 +1,7 @@
 # Proyecto 2 — Iluminación Local y Materiales
 
 **Computación Gráfica 2026 · DCIC - UNS**  
-Integrantes: Iker Ibarra, Iara
+Integrantes: Iker Ibarra, Giuliano Rosso
 
 ---
 
